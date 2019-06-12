@@ -16,6 +16,7 @@ int IX(int x, int y) {
 }
 
 class Fluid {
+  
   int size;
   float dt;
   float diff;
@@ -29,8 +30,10 @@ class Fluid {
 
   float[] Vx0;
   float[] Vy0;
+  
+  BathBomb bathBomb;
 
-  Fluid(float dt, float diffusion, float viscosity) {
+  Fluid(float dt, float diffusion, float viscosity, BathBomb bathBomb) {
 
     this.size = N;
     this.dt = dt;
@@ -45,6 +48,8 @@ class Fluid {
 
     this.Vx0 = new float[N*N];
     this.Vy0 = new float[N*N];
+    
+    this.bathBomb = bathBomb;
   }
 
   void step() {
@@ -84,13 +89,6 @@ class Fluid {
     this.Vy[index] += amountY;
   }
   
-  
-//#62B0CF rgb(98,176,207)
-//#E1C4A8 rgb(225,196,168)
-//#54517B rgb(84,81,123)
-//#7F6381 rgb(127,99,129)
-//#AB8D77 rgb(171,141,119)
-
   void renderD() {
     
     for (int i = 0; i < N; i++) {
@@ -102,16 +100,38 @@ class Fluid {
         if(d == 0) {
           fill(255, 255, 255, 0);
         } else if(d < 51) {
-          fill(98,176,207, d);
+          color originalColour = bathBomb.getColour(0);
+          color alphaLevel = (int)d << 030;
+          fill(originalColour & ~#000000 | alphaLevel);
         } else if(d < 102) {  
-          fill(225,196,168, d);
+          color originalColour = bathBomb.getColour(1);
+          color alphaLevel = (int)d << 030;
+          fill(originalColour & ~#000000 | alphaLevel);
         } else if(d < 153) {
-          fill(84,81,123, d);
+          color originalColour = bathBomb.getColour(2);
+          color alphaLevel = (int)d << 030;
+          fill(originalColour & ~#000000 | alphaLevel);
         } else if(d < 204){
-          fill(127,99,129, d);
+          color originalColour = bathBomb.getColour(3);
+          color alphaLevel = (int)d << 030;
+          fill(originalColour & ~#000000 | alphaLevel);
         } else {
-          fill(171,141,119, d);
+          color originalColour = bathBomb.getColour(4);
+          color alphaLevel = (int)d << 030;
+          fill(originalColour & ~#000000 | alphaLevel);
         }
+        
+        //} else if(d < 51) {
+        //  fill(98,176,207, d);
+        //} else if(d < 102) {  
+        //  fill(225,196,168, d);
+        //} else if(d < 153) {
+        //  fill(84,81,123, d);
+        //} else if(d < 204){
+        //  fill(127,99,129, d);
+        //} else {
+        //  fill(171,141,119, d);
+        //}
         noStroke();
         square(x, y, SCALE);
       }
