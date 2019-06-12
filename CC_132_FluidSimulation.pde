@@ -16,37 +16,43 @@ float t = 0;
 
 Fluid fluid;
 
+PImage img;
+
 void settings() {
   size(N*SCALE, N*SCALE);
 }
 
 void setup() {
-  fluid = new Fluid(0.2, 0, 0.0000001);
+  img = loadImage("bath_image.png");
+  fluid = new Fluid(0.2, 0, 0.00000001);
+  
 }
 
-//void mouseDragged() {
-//}
-
 void draw() {
-  background(0);
+  
+  image(img, 0, 0);
+  
+  println(t);
+  
   int cx = int(0.5*width/SCALE);
   int cy = int(0.5*height/SCALE);
   for (int i = -1; i <= 1; i++) {
     for (int j = -1; j <= 1; j++) {
-      fluid.addDensity(cx+i, cy+j, random(50, 150));
+      fluid.addDensity(cx+i, cy+j, random(0, 100));
     }
   }
-  for (int i = 0; i < 2; i++) {
-    float angle = noise(t) * TWO_PI * 2;
-    PVector v = PVector.fromAngle(angle);
-    v.mult(0.2);
-    t += 0.01;
-    fluid.addVelocity(cx, cy, v.x, v.y );
+  
+  float vectorMultiplier = noise(t) / random(1, 10);
+  for (int i = 0; i < 4; i++) {
+    float angle = noise(t) * TWO_PI * 10;
+    PVector v = PVector.fromAngle(angle + i * random(60));
+    v.mult(vectorMultiplier);
+    t += 0.1;
+    fluid.addVelocity(cx, cy, v.x, v.y);
   }
-
 
   fluid.step();
   fluid.renderD();
-  //fluid.renderV();
-  //fluid.fadeD();
+  fluid.renderV();
+  fluid.fadeD();
 }
