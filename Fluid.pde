@@ -88,55 +88,47 @@ class Fluid {
     this.Vx[index] += amountX;
     this.Vy[index] += amountY;
   }
-  
-  void renderD() {
-    
+      
+  void renderD(float time) {
+
     for (int i = 0; i < N; i++) {
       for (int j = 0; j < N; j++) {
         float x = i * SCALE;
         float y = j * SCALE;
         float d = this.density[IX(i, j)];
         
+        
+        
         if(d == 0) {
           fill(255, 255, 255, 0);
-        } else if(d < 51) {
-          color originalColour = bathBomb.getColour(0);
-          color alphaLevel = (int)d << 030;
-          fill(originalColour & ~#000000 | alphaLevel);
-        } else if(d < 102) {  
-          color originalColour = bathBomb.getColour(1);
-          color alphaLevel = (int)d << 030;
-          fill(originalColour & ~#000000 | alphaLevel);
-        } else if(d < 153) {
-          color originalColour = bathBomb.getColour(2);
-          color alphaLevel = (int)d << 030;
-          fill(originalColour & ~#000000 | alphaLevel);
-        } else if(d < 204){
-          color originalColour = bathBomb.getColour(3);
-          color alphaLevel = (int)d << 030;
-          fill(originalColour & ~#000000 | alphaLevel);
         } else {
-          color originalColour = bathBomb.getColour(4);
-          color alphaLevel = (int)d << 030;
-          fill(originalColour & ~#000000 | alphaLevel);
+          
+          int dMod = (int)(d % 255);
+          
+          if(dMod < 51) {
+            fill(addAlphaToColour(bathBomb.getColour(0), d));
+          } else if(dMod < 102) {  
+            fill(addAlphaToColour(bathBomb.getColour(1), d));
+          } else if(dMod < 153) {
+            fill(addAlphaToColour(bathBomb.getColour(2), d));
+          } else if(dMod < 204){
+            fill(addAlphaToColour(bathBomb.getColour(3), d));
+          } else {
+            fill(addAlphaToColour(bathBomb.getColour(4), d));
+          }
         }
-        
-        //} else if(d < 51) {
-        //  fill(98,176,207, d);
-        //} else if(d < 102) {  
-        //  fill(225,196,168, d);
-        //} else if(d < 153) {
-        //  fill(84,81,123, d);
-        //} else if(d < 204){
-        //  fill(127,99,129, d);
-        //} else {
-        //  fill(171,141,119, d);
-        //}
+       
         noStroke();
         square(x, y, SCALE);
       }
     }
   }
+  
+  color addAlphaToColour(color colour, float density) {
+    color alphaLevel = (int)density << 030;
+    return colour & ~#000000 | alphaLevel;
+  }
+    
 
   void renderV() {
 

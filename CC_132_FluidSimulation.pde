@@ -12,7 +12,7 @@
 final int N = 128;
 final int iter = 16;
 final int SCALE = 4;
-float t = 0;
+float t = 1;
 
 Fluid fluid;
 BathBombUtil bathBombUtil;
@@ -35,7 +35,7 @@ void draw() {
   image(img, 0, 0);
   
   // Set the density amount
-  float densityAmount = 10;
+  float densityAmount = 20;
   
   int cx = int(0.5*width/SCALE);
   int cy = int(0.5*height/SCALE);
@@ -49,16 +49,24 @@ void draw() {
   float angle = (t % 18) * 5;
   PVector v = PVector.fromAngle(angle);
   
+  int lifeTime = 3000;
+  
+  println(lifeTime - t);
+  
   // Set the vector amount
-  float vectorMultiplier = 0.8;
+  float vectorMultiplier = ((lifeTime - t) / 1000) * random(1 - (t / lifeTime));
+  if(random(1) < 0.75) {
+    vectorMultiplier = 0;
+  }
+    
   v.mult(vectorMultiplier);
 
   fluid.addVelocity(cx, cy, v.x, v.y);
 
-  t += 0.2;
+  t += 1;
 
   fluid.step();
-  fluid.renderD();
+  fluid.renderD(t);
   fluid.renderV();
   fluid.fadeD();
 }
