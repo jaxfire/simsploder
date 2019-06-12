@@ -51,6 +51,10 @@ class Fluid {
     
     this.bathBomb = bathBomb;
   }
+  
+  public void setBathBomb(BathBomb bathBomb) {
+    this.bathBomb = bathBomb;
+  }
 
   void step() {
     int N          = this.size;
@@ -89,7 +93,7 @@ class Fluid {
     this.Vy[index] += amountY;
   }
       
-  void renderD(float time) {
+  void renderD() {
 
     for (int i = 0; i < N; i++) {
       for (int j = 0; j < N; j++) {

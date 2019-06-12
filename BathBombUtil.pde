@@ -1,10 +1,13 @@
 class BathBombUtil {
   
+  int index;
   private BathBomb[] bathBombs;
   
   public BathBombUtil() {
+    
+    index = 0;
         
-    bathBombs = new BathBomb[6];
+    bathBombs = new BathBomb[9];
     
     String[] names = new String[] {
       "Black Rose", "Geode", "Groovy Kind Of Love", "Harajuku", "Goddess", "Kitsune", "Lemon Butterfly", "Marshmallow World", "Sushi"
@@ -27,7 +30,9 @@ class BathBombUtil {
     }
   }
   
-  public BathBomb getBathBomb(int index) {
-    return bathBombs[index];
+  public BathBomb getNextBathBomb() {
+    BathBomb result = bathBombs[index % bathBombs.length];
+    index++;
+    return result;
   }
 }
