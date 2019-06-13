@@ -52,9 +52,9 @@ class Fluid {
     this.bathBomb = bathBomb;
   }
   
-  public void setBathBomb(BathBomb bathBomb) {
-    this.bathBomb = bathBomb;
-  }
+  //public void setBathBomb(BathBomb bathBomb) {
+  //  this.bathBomb = bathBomb;
+  //}
 
   void step() {
     int N          = this.size;

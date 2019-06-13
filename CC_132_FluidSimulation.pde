@@ -14,7 +14,7 @@ final int iter = 16;
 final int SCALE = 4;
 float t = 1;
 
-int lifeTime = 2000;
+int lifeTime = 2250;
 
 Fluid fluid;
 BathBombUtil bathBombUtil;
@@ -36,7 +36,8 @@ void setup() {
 
 void draw() {
   
-  image(img, 0, 0);
+  //image(img, 0, 0);
+  background(255);
   
   if(t < lifeTime) {
   
@@ -66,9 +67,7 @@ void draw() {
     fluid.addVelocity(cx, cy, v.x, v.y);
   
     
-  } else if(t > lifeTime * 1.25) {
-    
-    println("New bath bomb");
+  } else if(t > lifeTime * 1.10) {
     
     currentBathBomb = bathBombUtil.getNextBathBomb();
     fluid = new Fluid(0.2, 0, 0.0000001, currentBathBomb);
@@ -83,7 +82,7 @@ void draw() {
   fluid.fadeD();
   
   PFont myFont;
-  myFont = createFont("lush_handwritten_bold.otf", 48);
+  myFont = createFont("lush_handwritten_bold.otf", 32);
   textFont(myFont);
   fill(0, 0, 0);
   textAlign(CENTER);
