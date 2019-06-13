@@ -57,7 +57,7 @@ void draw() {
     PVector v = PVector.fromAngle(angle);
     
     // Set the vector amount
-    float vectorMultiplier = ((lifeTime - t) / 550) * noise(t);
+    float vectorMultiplier = ((lifeTime - t) / 500) * noise(t);
     if(random(1) < 0.30) {
       vectorMultiplier = 0;
     }
