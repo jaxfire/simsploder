@@ -16,6 +16,8 @@ float t = 1;
 
 int lifeTime = 2250;
 
+  PFont myFont;
+
 Fluid fluid;
 BathBombUtil bathBombUtil;
 BathBomb currentBathBomb;
@@ -30,19 +32,17 @@ void setup() {
   
   bathBombUtil = new BathBombUtil();
   currentBathBomb = bathBombUtil.getNextBathBomb();
-  img = loadImage("bath_image.png");
+  myFont = createFont("lush_handwritten_bold.otf", 32);
   fluid = new Fluid(0.2, 0, 0.0000001, currentBathBomb);
 }
 
 void draw() {
-  
-  //image(img, 0, 0);
   background(255);
   
   if(t < lifeTime) {
   
     // Set the density amount
-    float densityAmount = 17.5;
+    float densityAmount = 15;
     
     int cx = int(0.5*width/SCALE);
     int cy = int(0.5*height/SCALE);
@@ -57,9 +57,13 @@ void draw() {
     PVector v = PVector.fromAngle(angle);
     
     // Set the vector amount
-    float vectorMultiplier = ((lifeTime - t) / 500) * noise(t);
-    if(random(1) < 0.30) {
+    float vectorMultiplier = ((lifeTime - t * 0.75) / 550) * max(0.1, noise(t));
+    
+    float drasticModifier = random(1);
+    if(drasticModifier < 0.55) {
       vectorMultiplier = 0;
+    } else if(drasticModifier > 0.95) {
+      vectorMultiplier *= 2;
     }
       
     v.mult(vectorMultiplier);
@@ -67,7 +71,7 @@ void draw() {
     fluid.addVelocity(cx, cy, v.x, v.y);
   
     
-  } else if(t > lifeTime * 1.10) {
+  } else if(t > lifeTime * 1.20) {
     
     currentBathBomb = bathBombUtil.getNextBathBomb();
     fluid = new Fluid(0.2, 0, 0.0000001, currentBathBomb);
@@ -81,8 +85,6 @@ void draw() {
   fluid.renderV();
   fluid.fadeD();
   
-  PFont myFont;
-  myFont = createFont("lush_handwritten_bold.otf", 32);
   textFont(myFont);
   fill(0, 0, 0);
   textAlign(CENTER);

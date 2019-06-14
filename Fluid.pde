@@ -106,19 +106,22 @@ class Fluid {
         if(d == 0) {
           fill(255, 255, 255, 0);
         } else {
+
+          float power = 1.2;
+          float dSquared = map(pow(d, power), 0, pow(255, power), 0, 1);
           
-          int dMod = (int)(d % 255);
-          
-          if(dMod < 51) {
+          if(dSquared < 0.17) {
             fill(addAlphaToColour(bathBomb.getColour(0), d));
-          } else if(dMod < 102) {  
+          } else if(dSquared < 0.34) {  
             fill(addAlphaToColour(bathBomb.getColour(1), d));
-          } else if(dMod < 153) {
-            fill(addAlphaToColour(bathBomb.getColour(2), d));
-          } else if(dMod < 204){
-            fill(addAlphaToColour(bathBomb.getColour(3), d));
+          } else if(dSquared < 0.51) {
+            fill(addAlphaToColour(bathBomb.getColour(2), d * 0.85));
+          } else if(dSquared < 0.68){
+            fill(addAlphaToColour(bathBomb.getColour(3), d * 0.75));
+          } else if(dSquared < 0.84){
+            fill(addAlphaToColour(bathBomb.getColour(4), d * 0.65));
           } else {
-            fill(addAlphaToColour(bathBomb.getColour(4), d));
+            fill(addAlphaToColour(bathBomb.getColour(5), d * 0.55));
           }
         }
        

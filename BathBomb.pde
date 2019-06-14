@@ -1,7 +1,7 @@
 public class BathBomb {
   
   private String name;
-  private color[] colours = new color[5];
+  private color[] colours = new color[6];
   
   public BathBomb(String name, color[]  colours) {
     this.name = name;
