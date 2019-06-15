@@ -32,6 +32,9 @@ class Fluid {
   float[] Vy0;
   
   BathBomb bathBomb;
+  
+  int numOfColours = 0;
+  float colourDivide;
 
   Fluid(float dt, float diffusion, float viscosity, BathBomb bathBomb) {
 
@@ -50,11 +53,10 @@ class Fluid {
     this.Vy0 = new float[N*N];
     
     this.bathBomb = bathBomb;
+    
+    numOfColours = bathBomb.getNumOfColours();
+    colourDivide = 1f / numOfColours;
   }
-  
-  //public void setBathBomb(BathBomb bathBomb) {
-  //  this.bathBomb = bathBomb;
-  //}
 
   void step() {
     int N          = this.size;
@@ -92,16 +94,16 @@ class Fluid {
     this.Vx[index] += amountX;
     this.Vy[index] += amountY;
   }
-      
+
   void renderD() {
+    
+    float alphaMod = 1 - colourDivide / 2;
 
     for (int i = 0; i < N; i++) {
       for (int j = 0; j < N; j++) {
         float x = i * SCALE;
         float y = j * SCALE;
         float d = this.density[IX(i, j)];
-        
-        
         
         if(d == 0) {
           fill(255, 255, 255, 0);
@@ -110,21 +112,14 @@ class Fluid {
           float power = 1.2;
           float dSquared = map(pow(d, power), 0, pow(255, power), 0, 1);
           
-          if(dSquared < 0.17) {
-            fill(addAlphaToColour(bathBomb.getColour(0), d));
-          } else if(dSquared < 0.34) {  
-            fill(addAlphaToColour(bathBomb.getColour(1), d));
-          } else if(dSquared < 0.51) {
-            fill(addAlphaToColour(bathBomb.getColour(2), d * 0.85));
-          } else if(dSquared < 0.68){
-            fill(addAlphaToColour(bathBomb.getColour(3), d * 0.75));
-          } else if(dSquared < 0.84){
-            fill(addAlphaToColour(bathBomb.getColour(4), d * 0.65));
-          } else {
-            fill(addAlphaToColour(bathBomb.getColour(5), d * 0.55));
+          for(int k = 1; k <= numOfColours; k++) {
+            float nextSegment = k * colourDivide;
+            if(dSquared < nextSegment) {
+              fill(addAlphaToColour(bathBomb.getColour(k - 1), d * alphaMod));
+              break;
+            }
           }
-        }
-       
+        } //<>//
         noStroke();
         square(x, y, SCALE);
       }
