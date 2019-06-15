@@ -73,9 +73,8 @@ void draw() {
     
   } else if(t > lifeTime * 1.20) {
     
-    currentBathBomb = bathBombUtil.getNextBathBomb();
-    fluid = new Fluid(0.2, 0, 0.0000001, currentBathBomb);
-    t = 0;
+    reset();
+    currentBathBomb.randomiseColours();
   }
   
   t += 1.5;
@@ -89,4 +88,10 @@ void draw() {
   fill(0, 0, 0);
   textAlign(CENTER);
   text(currentBathBomb.getName(), N * SCALE / 2, N * SCALE - N / 4);
+}
+
+void reset() {
+    currentBathBomb = bathBombUtil.getNextBathBomb();
+    fluid = new Fluid(0.2, 0, 0.0000001, currentBathBomb);
+    t = 0;
 }
