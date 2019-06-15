@@ -7,13 +7,15 @@ class BathBombUtil {
     
     index = 0;
         
-    bathBombs = new BathBomb[8];
+    bathBombs = new BathBomb[9];
     
     String[] names = new String[] {
-      "Groovy Kind Of Love", "Hulder", "Goddess", "Lemon Butterfly", "Harajuku", "Kitsune", "The Expermienter", "Geode", "Marshmallow World", "Sushi"
+      "Melusine", "Groovy Kind Of Love", "Hulder", "Goddess", "Lemon Butterfly", "Harajuku", "Kitsune", "The Expermienter", "Geode", "Marshmallow World", "Sushi"
     };
     
-    color[][] colors = new color[][] {      
+    color[][] colors = new color[][] {
+      new color[]{color(168, 189, 139), color(174, 194, 147), color(56, 114, 67), color(103, 146, 100), color(164, 180, 91), color(199, 222, 210),
+    color(139, 133, 42), color(222, 220, 168), color(129, 145, 100), color(208, 228, 175), color(87, 106, 69), color(202, 216, 193)}, // Melusine
       new color[]{color(248,190,96), color(235,182,144), color(175,114,176), color(112,175,202), color(249,248,248), color(224, 138, 143)}, // Groovy Kind of Love
       new color[]{color(193,209,177), color(220,192,234), color(89,159,81), color(98, 78, 151), color(62,128,65), color(239, 254, 207)}, // Hulder
       new color[]{color(204,132,228), color(192,167,223), color(136,93,177), color(159,125,199), color(247,246,250), color(228, 73, 231)}, // Goddess 
